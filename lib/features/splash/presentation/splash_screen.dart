@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
+import '../../../core/di/providers.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -19,9 +20,26 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 2), () {
+    _checkLogin();
+  }
+
+  Future<void> _checkLogin() async {
+
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
+
+    final viewModel =
+    ref.read(splashViewModelProvider);
+
+    final isLoggedIn =
+    await viewModel.checkLoginStatus();
+
+    if (isLoggedIn) {
+      context.go(AppRoutes.home);
+    } else {
       context.go(AppRoutes.login);
-    });
+    }
   }
 
   @override
