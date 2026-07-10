@@ -1,4 +1,6 @@
-import 'package:shop_easy/features/login/domain/auth_repository.dart';
+
+
+import '../../login/domain/auth_repository.dart';
 
 class SplashViewModel {
   final AuthRepository _repository;
