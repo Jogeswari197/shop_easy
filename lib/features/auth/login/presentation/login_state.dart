@@ -1,19 +1,27 @@
 class LoginState {
   final bool isLoading;
-  final String? error;
+  final String? serverError;
+  final String? emailError;
+  final String? passwordError;
 
   const LoginState({
     this.isLoading = false,
-    this.error,
+    this.serverError,
+    this.emailError,
+    this.passwordError
   });
 
   LoginState copyWith({
     bool? isLoading,
     String? error,
+    String? emailError,
+    String? passwordError
   }) {
     return LoginState(
       isLoading: isLoading ?? this.isLoading,
-      error: error,
+      serverError: error,
+      emailError: emailError,
+      passwordError: passwordError
     );
   }
 }

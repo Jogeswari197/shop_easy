@@ -50,4 +50,9 @@ class AuthRemoteDataSourceImpl
       token: token ?? '',
     );
   }
+
+  @override
+  Future<bool> isLoggedIn() async {
+    return _firebaseAuth.currentUser != null;
+  }
 }

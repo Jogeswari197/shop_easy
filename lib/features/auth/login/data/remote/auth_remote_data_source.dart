@@ -12,4 +12,6 @@ abstract class AuthRemoteDataSource {
       SignUpRequestModel request,
       );
 
+  Future<bool> isLoggedIn();
+
 }

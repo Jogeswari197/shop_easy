@@ -17,8 +17,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<bool> isLoggedIn() async {
-    final token = await _localDataSource.getToken();
-    return token != null;
+    return _remoteDataSource.isLoggedIn();
   }
 
   @override

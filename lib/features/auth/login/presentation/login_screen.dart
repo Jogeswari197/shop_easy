@@ -14,8 +14,22 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final _emailController =
+  TextEditingController();
+
+  final _passwordController =
+  TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      ref
+          .read(loginViewModelProvider.notifier)
+          .clearErrors();
+    });
+  }
 
   @override
   void dispose() {
@@ -47,22 +61,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 TextField(
                   controller: _emailController,
-
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Email",
+                    errorText: state.emailError,
                   ),
+
+                  onChanged: (value) {
+                    ref
+                        .read(loginViewModelProvider.notifier)
+                        .onEmailChanged(value);
+                  },
                 ),
 
                 const SizedBox(height: 20),
 
                 TextField(
                   controller: _passwordController,
-
-                  obscureText: true,
-
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Password",
+                    errorText: state.passwordError,
                   ),
+
+                  onChanged: (value) {
+                    ref
+                        .read(loginViewModelProvider.notifier)
+                        .onPasswordChanged(value);
+                  },
                 ),
 
                 const SizedBox(height: 30),
@@ -99,11 +123,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ? const CircularProgressIndicator()
                       : const Text("Login"),
                 ),
-                if (state.error != null)
+                if (state.serverError != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
-                      state.error!,
+                      state.serverError!,
                       style: const TextStyle(
                         color: Colors.red,
                       ),
