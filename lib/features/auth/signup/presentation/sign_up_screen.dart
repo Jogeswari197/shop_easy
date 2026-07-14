@@ -4,6 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/di/providers.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_heading.dart';
+import '../../../../core/widgets/app_logo.dart';
+import '../../../../core/widgets/app_textfield.dart';
 import '../../login/data/models/sign_up_request_model.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -62,12 +67,22 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                TextField(
+
+                const AppLogo(size: 60,),
+
+                const SizedBox(height: AppSpacing.xl),
+
+                const AppHeading(
+                  title: "Create Account",
+                  subtitle: "Join ShopEasy today!",
+                ),
+
+                const SizedBox(height: 40),
+                AppTextField(
                   controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                    errorText: state.nameError
-                  ),
+                  label: "Name",
+                  errorText: state.nameError,
+                  keyboardType: TextInputType.text,
                   onChanged: (value) {
                     ref
                         .read(signUpViewModelProvider.notifier)
@@ -76,12 +91,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
 
                 const SizedBox(height: 20),
-                TextField(
+                AppTextField(
                   controller: _emailController,
-                  decoration:  InputDecoration(
-                    labelText: "Email",
-                    errorText: state.emailError
-                  ),
+                  label: "Email",
+                  errorText: state.emailError,
+                  keyboardType: TextInputType.emailAddress,
                   onChanged: (value) {
                     ref
                         .read(signUpViewModelProvider.notifier)
@@ -91,13 +105,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 const SizedBox(height: 20),
 
-                TextField(
+                AppTextField(
                   controller: _passwordController,
-                  obscureText: true,
-                  decoration:  InputDecoration(
-                    labelText: "Password",
-                    errorText: state.passwordError
-                  ),
+                  label: "Password",
+                  errorText: state.passwordError,
+                  keyboardType: TextInputType.text,
                   onChanged: (value) {
                     ref
                         .read(signUpViewModelProvider.notifier)
@@ -107,13 +119,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 const SizedBox(height: 20),
 
-                TextField(
+                AppTextField(
                   controller: _confirmPasswordController,
-                  obscureText: true,
-                  decoration:  InputDecoration(
-                    labelText: "Confirm Password",
-                    errorText: state.confirmPasswordError
-                  ),
+                  label: "Confirm Password",
+                  errorText: state.confirmPasswordError,
+                  keyboardType: TextInputType.text,
                   onChanged: (value) {
                     ref
                         .read(signUpViewModelProvider.notifier)
@@ -123,46 +133,81 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 const SizedBox(height: 30),
 
-                ElevatedButton(
-                  onPressed: state.isLoading
-                      ? null
-                      : () async {
+                // ElevatedButton(
+                //   onPressed: state.isLoading
+                //       ? null
+                //       : () async {
+                //
+                //     final request =
+                //     SignUpRequestModel(
+                //       name: _nameController.text,
+                //       email: _emailController.text,
+                //       password: _passwordController.text,
+                //       confirmPassword:
+                //       _confirmPasswordController.text,
+                //     );
+                //
+                //     final success = await ref
+                //         .read(signUpViewModelProvider.notifier)
+                //         .signUp(request);
+                //
+                //     if (!mounted) return;
+                //
+                //     if (success) {
+                //
+                //       ScaffoldMessenger.of(context)
+                //           .showSnackBar(
+                //         const SnackBar(
+                //           content: Text(
+                //             "Account Created Successfully",
+                //           ),
+                //         ),
+                //       );
+                //
+                //       context.pop();
+                //
+                //     }
+                //
+                //   },
+                //
+                //   child: state.isLoading
+                //       ? const CircularProgressIndicator()
+                //       : const Text("Create Account"),
+                // ),
 
-                    final request =
-                    SignUpRequestModel(
-                      name: _nameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      confirmPassword:
-                      _confirmPasswordController.text,
-                    );
+                AppButton(
+                  text: "Create Account",
+                  isLoading: state.isLoading,
+                  onPressed: () async {
 
-                    final success = await ref
-                        .read(signUpViewModelProvider.notifier)
-                        .signUp(request);
+                        final request =
+                        SignUpRequestModel(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          confirmPassword:
+                          _confirmPasswordController.text,
+                        );
+
+                            final success = await ref
+                                .read(signUpViewModelProvider.notifier)
+                                .signUp(request);
 
                     if (!mounted) return;
 
                     if (success) {
-
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            "Account Created Successfully",
-                          ),
-                        ),
-                      );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Account Created Successfully",
+                                ),
+                              ),
+                            );
 
                       context.pop();
-
                     }
-
                   },
-
-                  child: state.isLoading
-                      ? const CircularProgressIndicator()
-                      : const Text("Create Account"),
                 ),
 
                 const SizedBox(height: 20),

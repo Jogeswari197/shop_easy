@@ -4,6 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/di/providers.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_textstyles.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_heading.dart';
+import '../../../../core/widgets/app_logo.dart';
+import '../../../../core/widgets/app_textfield.dart';
 import '../data/models/login_request_model.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -43,11 +50,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final state = ref.watch(loginViewModelProvider);
     return  Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text("Login"),
       ),
 
       body: Center(
+    child: ConstrainedBox(
+    constraints: const BoxConstraints(
+    maxWidth: 450,
+    ),
         child: Padding(
           padding: const EdgeInsets.all(20),
 
@@ -59,13 +71,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
               children: [
 
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    errorText: state.emailError,
-                  ),
+                const AppLogo(size: 90,),
 
+                const SizedBox(height: 32),
+
+                const AppHeading(
+                  title: "Welcome Back 👋",
+                  subtitle: "Sign in to continue shopping",
+                ),
+
+
+                const SizedBox(
+                  height: AppSpacing.xl,
+                ),
+
+                AppTextField(
+                  controller: _emailController,
+                  label: "Email",
+                  errorText: state.emailError,
+                  keyboardType: TextInputType.emailAddress,
+                  prefixIcon: Icons.email_outlined,
                   onChanged: (value) {
                     ref
                         .read(loginViewModelProvider.notifier)
@@ -75,13 +100,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 const SizedBox(height: 20),
 
-                TextField(
+                AppTextField(
                   controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    errorText: state.passwordError,
-                  ),
-
+                  label: "Password",
+                  obscureText: true,
+                  errorText: state.passwordError,
+                  prefixIcon: Icons.lock_clock_outlined,
                   onChanged: (value) {
                     ref
                         .read(loginViewModelProvider.notifier)
@@ -91,37 +115,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 const SizedBox(height: 30),
 
-                ElevatedButton(
-                  onPressed: state.isLoading
-                      ? null
-                      : () async {
+                AppButton(
+                  text: "Sign In",
+                  isLoading: state.isLoading,
+                  onPressed: () async {
 
                     final success =
                     await ref
                         .read(loginViewModelProvider.notifier)
-                        .login(email: _emailController.text, password: _passwordController.text);
+                        .login(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
 
                     if (!mounted) return;
-                    if (success) {
 
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text(
-                            "Logged in Successfully",
-                          ),
+                          content: Text("Logged in Successfully"),
                         ),
                       );
 
                       context.go(AppRoutes.home);
-
                     }
-
-
                   },
-                  child: state.isLoading
-                      ? const CircularProgressIndicator()
-                      : const Text("Login"),
                 ),
                 if (state.serverError != null)
                   Padding(
@@ -158,6 +176,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         ),
       ),
+      )
     );
   }
 }

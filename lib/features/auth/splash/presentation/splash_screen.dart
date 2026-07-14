@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/di/providers.dart';
+import '../../../../core/widgets/app_heading.dart';
+import '../../../../core/widgets/app_logo.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -46,7 +48,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: FlutterLogo(size: 120),
+        child:const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            AppLogo(size: 110,),
+
+            SizedBox(height: 24),
+
+            AppHeading(
+              title: "Shop Smart",
+              subtitle: "Loading your shopping experience...",
+            ),
+
+            SizedBox(height: 32),
+
+            CircularProgressIndicator(),
+
+          ],
+        ),
       ),
     );
   }
