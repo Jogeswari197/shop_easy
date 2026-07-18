@@ -13,38 +13,50 @@ class FeaturedProductsSection extends StatelessWidget {
 
     const products = [
 
-      ProductModel(
+      const ProductModel(
+        id: "1",
         name: "Nike Shoes",
         price: 2999,
         imageUrl: "",
         rating: 4.5,
+        description:
+        "Premium running shoes with lightweight cushioning and excellent comfort.",
         discount: 20,
         isFavorite: true,
       ),
 
       ProductModel(
+        id: "2",
         name: "iPhone 16",
         price: 79999,
         imageUrl: "",
         rating: 4.9,
+        description:
+        "Premium running shoes with lightweight cushioning and excellent comfort.",
         discount: 20,
         isFavorite: true,
       ),
 
       ProductModel(
+        id: "3",
         name: "Laptop",
         price: 55999,
         imageUrl: "",
         rating: 4.6,
+        description:
+        "Premium running shoes with lightweight cushioning and excellent comfort.",
         discount: 20,
         isFavorite: false,
       ),
 
       ProductModel(
+        id: "4",
         name: "Headphones",
         price: 3499,
         imageUrl: "",
         rating: 4.4,
+        description:
+        "Premium running shoes with lightweight cushioning and excellent comfort.",
         discount: 20,
         isFavorite: true,
       ),

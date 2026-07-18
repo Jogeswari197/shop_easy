@@ -4,6 +4,8 @@ import '../../features/auth/login/presentation/login_screen.dart';
 import '../../features/auth/signup/presentation/sign_up_screen.dart';
 import '../../features/auth/splash/presentation/splash_screen.dart';
 import '../../features/home/presentation/home.dart';
+import '../../features/navigation/presentation/navigation_screen.dart';
+import '../../features/product/presenation/product_details_screen.dart';
 import 'app_routes.dart';
 
 final appRouter = GoRouter(
@@ -23,7 +25,18 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => const NavigationScreen(),
     ),
+    GoRoute(
+      path: '/product/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+
+        return ProductDetailsScreen(
+          productId: id,
+        );
+      },
+    ),
+
   ],
 );
