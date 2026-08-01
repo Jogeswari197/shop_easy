@@ -1,24 +1,11 @@
+import '../models/product_model.dart';
 
-import '../../../home/presentation/models/product_model.dart';
+abstract class ProductRemoteDataSource {
 
-class ProductRemoteDataSource {
+  Future<List<ProductModel>> getProducts();
 
-  Future<ProductModel> getProduct(String productId) async {
+  Future<ProductModel> getProduct(
+      String productId,
+      );
 
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
-
-    return ProductModel(
-      id: productId,
-      name: "Nike Air Max",
-      price: 2999,
-      imageUrl: "",
-      rating: 4.5,
-      description:
-      "Premium running shoes with lightweight cushioning and excellent comfort.",
-      discount: 20,
-      isFavorite: true,
-    );
-  }
 }

@@ -5,7 +5,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_textstyles.dart';
-import '../models/product_model.dart';
+import '../../../../core/widgets/app_network_image.dart';
+import '../../../../core/widgets/app_product_image.dart';
+import '../../../product/data/models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -17,6 +19,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Product: ${product.name}");
+    debugPrint("Image: ${product.imageUrl}");
     return InkWell(
       onTap: (){
         context.push(
@@ -45,40 +49,50 @@ class ProductCard extends StatelessWidget {
                 child: Stack(
                   children: [
 
-                    Positioned.fill(
-                      child: Container(
+                    SizedBox(
+                      height: 120,
+                      width: double.infinity,
 
+                      child: product.imageUrl.isEmpty
+                          ? Container(
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200,
                           borderRadius:
-                          BorderRadius.circular(AppRadius.md),
+                          BorderRadius.circular(
+                            AppRadius.md,
+                          ),
                         ),
-
                         child: const Icon(
                           Icons.image_outlined,
-                          size: 40,
-                          color: Colors.grey,
+                          size: 45,
                         ),
-                      ),
+                      )
+
+                          : AppProductImage(
+                        image: product.imageUrl,
+                        height: 120,
+                        width: double.infinity,
+                      )
                     ),
 
-                    Positioned(
-                      top: 8,
-                      left: 8,
 
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.white,
-
-                        child: Icon(
-                          product.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: Colors.red,
-                          size: 18,
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 8,
+                    //   left: 8,
+                    //
+                    //   child: CircleAvatar(
+                    //     radius: 16,
+                    //     backgroundColor: Colors.white,
+                    //
+                    //     child: Icon(
+                    //       product.isFavorite
+                    //           ? Icons.favorite
+                    //           : Icons.favorite_border,
+                    //       color: Colors.red,
+                    //       size: 18,
+                    //     ),
+                    //   ),
+                    // ),
 
                     if (product.discount > 0)
 

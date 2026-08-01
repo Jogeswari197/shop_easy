@@ -1,5 +1,5 @@
 import '../../cart/presentation/models/cart_item_model.dart';
-import '../../home/presentation/models/product_model.dart';
+import '../data/models/product_model.dart';
 
 extension ProductMapper on ProductModel {
 

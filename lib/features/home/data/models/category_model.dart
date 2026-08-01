@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CategoryModel {
-  final String title;
+  final String name;
   final IconData icon;
 
   const CategoryModel({
-    required this.title,
+    required this.name,
     required this.icon,
   });
 }

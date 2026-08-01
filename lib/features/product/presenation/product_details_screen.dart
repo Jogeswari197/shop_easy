@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_easy/features/product/presenation/providers/product_providers.dart';
 
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/app_network_image.dart';
+import '../../../core/widgets/app_product_image.dart';
 import '../../cart/presentation/models/cart_item_model.dart';
 import '../../cart/presentation/providers/cart_provider.dart';
 import '../mappers/product_mapper.dart';
@@ -57,10 +59,11 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Icon(
-                    Icons.image,
-                    size: 100,
-                  ),
+                  child: AppProductImage(
+                    image: product.imageUrl,
+                    height: 300,
+                    width: double.infinity,
+                  )
                 ),
                 const SizedBox(height: 20),
 

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_textstyles.dart';
-import '../models/category_model.dart';
+import '../../../../dev_tools/sample_categories.dart';
+import '../../data/models/category_model.dart';
 import 'category_item.dart';
 
 class CategorySection extends StatelessWidget {
@@ -11,34 +12,6 @@ class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    const categories = [
-
-      CategoryModel(
-        title: "Shoes",
-        icon: Icons.hiking,
-      ),
-
-      CategoryModel(
-        title: "Mobiles",
-        icon: Icons.phone_android,
-      ),
-
-      CategoryModel(
-        title: "Fashion",
-        icon: Icons.checkroom,
-      ),
-
-      CategoryModel(
-        title: "Laptop",
-        icon: Icons.laptop,
-      ),
-
-      CategoryModel(
-        title: "Groceries",
-        icon: Icons.local_grocery_store,
-      ),
-
-    ];
 
     return Column(
       crossAxisAlignment:
@@ -59,17 +32,17 @@ class CategorySection extends StatelessWidget {
 
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-
-            itemCount: categories.length,
-
+            itemCount: SampleCategories.categories.length,
             itemBuilder: (context, index) {
 
-              return CategoryItem(
-                category: categories[index],
-              );
+              final category =
+              SampleCategories.categories[index];
 
+              return CategoryItem(
+                category: category,
+              );
             },
-          ),
+          )
         ),
 
       ],

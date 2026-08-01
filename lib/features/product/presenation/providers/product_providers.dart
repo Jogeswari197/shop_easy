@@ -1,21 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../home/presentation/models/product_model.dart';
+import '../../data/data_source/product_remote_data_source_imple.dart';
+import '../../data/models/product_model.dart';
 import '../../data/data_source/product_remote_data_source.dart';
 import '../../data/repositories/product_repository_impl.dart';
 import '../../domain/repositories/product_repository.dart';
 
-final productRemoteDataSourceProvider =
-Provider<ProductRemoteDataSource>((ref) {
-  return ProductRemoteDataSource();
-});
 
-final productRepositoryProvider =
-Provider<ProductRepository>((ref) {
-  return ProductRepositoryImpl(
-    ref.read(productRemoteDataSourceProvider),
-  );
-});
+
 
 final productProvider =
 FutureProvider.family<ProductModel, String>(
@@ -25,3 +18,36 @@ FutureProvider.family<ProductModel, String>(
         .getProduct(productId);
   },
 );
+
+final firestoreProvider =
+Provider<FirebaseFirestore>((ref) {
+  return FirebaseFirestore.instance;
+});
+
+
+final productRemoteDataSourceProvider =
+Provider<ProductRemoteDataSource>((ref) {
+
+  return ProductRemoteDataSourceImpl(
+    ref.read(firestoreProvider),
+  );
+
+});
+
+final productRepositoryProvider =
+Provider<ProductRepository>((ref) {
+
+  return ProductRepositoryImpl(
+    ref.read(productRemoteDataSourceProvider),
+  );
+
+});
+
+final productsProvider =
+FutureProvider<List<ProductModel>>((ref) async {
+
+  return ref
+      .read(productRepositoryProvider)
+      .getProducts();
+
+});

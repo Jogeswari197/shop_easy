@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../../dev_tools/product_seeder_screen.dart';
 import '../../features/auth/login/presentation/login_screen.dart';
 import '../../features/auth/signup/presentation/sign_up_screen.dart';
 import '../../features/auth/splash/presentation/splash_screen.dart';
@@ -13,7 +14,7 @@ final appRouter = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.splash,
-      builder: (context, state) => SplashScreen(),
+      builder: (context, state) => SplashScreen()
     ),
     GoRoute(
       path: AppRoutes.signup,

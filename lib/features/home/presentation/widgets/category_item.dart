@@ -4,7 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_textstyles.dart';
-import '../models/category_model.dart';
+import '../../data/models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryModel category;
@@ -48,7 +48,7 @@ class CategoryItem extends StatelessWidget {
           ),
 
           Text(
-            category.title,
+            category.name,
             style: AppTextStyles.bodySecondary,
             textAlign: TextAlign.center,
           ),
