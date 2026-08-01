@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop_easy/features/product/presenation/providers/product_providers.dart';
 
 import '../../../core/widgets/app_button.dart';
+import '../../cart/presentation/models/cart_item_model.dart';
+import '../../cart/presentation/providers/cart_provider.dart';
+import '../mappers/product_mapper.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   final String productId;
@@ -128,10 +131,19 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                 AppButton(
                   text: "Add to Cart",
                   onPressed: () {
-                    // We'll implement this later.
-                  },
-                  isLoading: false,
-                ),
+                    debugPrint("app button called");
+
+                    ref.read(cartProvider.notifier).addToCart(
+                      product.toCartItem(),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("${product.name} added to cart"),
+                      ),
+                    );
+                  }, isLoading: false,
+                )
               ],
             ),
           );

@@ -158,21 +158,21 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(
-                height: AppSpacing.md,
-              ),
+              // const SizedBox(
+              //   height: AppSpacing.md,
+              // ),
 
-              SizedBox(
-                width: double.infinity,
-                height: 35,
-                child: ElevatedButton(
-                  onPressed: () {},
-
-                  child: const Text(
-                    "Add to Cart",
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 35,
+              //   child: ElevatedButton(
+              //     onPressed: () {},
+              //
+              //     child: const Text(
+              //       "Add to Cart",
+              //     ),
+              //   ),
+              // ),
 
             ],
           ),
