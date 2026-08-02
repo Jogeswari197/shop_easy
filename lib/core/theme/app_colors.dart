@@ -37,4 +37,6 @@ class AppColors {
   // Border
   static const border =
   Color(0xFFE5E7EB);
+
+  static const discount = Color(0xFFE53935);
 }

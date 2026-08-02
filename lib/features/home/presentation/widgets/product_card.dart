@@ -5,9 +5,13 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_textstyles.dart';
+import '../../../../core/utils/price_utils.dart';
 import '../../../../core/widgets/app_network_image.dart';
 import '../../../../core/widgets/app_product_image.dart';
+import '../../../../core/widgets/favourite_button.dart';
+import '../../../../core/widgets/rating_chip.dart';
 import '../../../product/data/models/product_model.dart';
+import '../../../product/presenation/widgets/product_image_section.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -19,8 +23,10 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Product: ${product.name}");
-    debugPrint("Image: ${product.imageUrl}");
+    final originalPrice = PriceUtils.getOriginalPrice(
+      price: product.price,
+      discount: product.discount,
+    );
     return InkWell(
       onTap: (){
         context.push(
@@ -45,86 +51,8 @@ class ProductCard extends StatelessWidget {
             children: [
 
               // Image Placeholder
-              Expanded(
-                child: Stack(
-                  children: [
-
-                    SizedBox(
-                      height: 120,
-                      width: double.infinity,
-
-                      child: product.imageUrl.isEmpty
-                          ? Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius:
-                          BorderRadius.circular(
-                            AppRadius.md,
-                          ),
-                        ),
-                        child: const Icon(
-                          Icons.image_outlined,
-                          size: 45,
-                        ),
-                      )
-
-                          : AppProductImage(
-                        image: product.imageUrl,
-                        height: 120,
-                        width: double.infinity,
-                      )
-                    ),
-
-
-                    // Positioned(
-                    //   top: 8,
-                    //   left: 8,
-                    //
-                    //   child: CircleAvatar(
-                    //     radius: 16,
-                    //     backgroundColor: Colors.white,
-                    //
-                    //     child: Icon(
-                    //       product.isFavorite
-                    //           ? Icons.favorite
-                    //           : Icons.favorite_border,
-                    //       color: Colors.red,
-                    //       size: 18,
-                    //     ),
-                    //   ),
-                    // ),
-
-                    if (product.discount > 0)
-
-                      Positioned(
-                        top: 8,
-                        right: 8,
-
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius:
-                            BorderRadius.circular(20),
-                          ),
-
-                          child: Text(
-                            "-${product.discount}%",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                  ],
-                ),
+              ProductImageSection(
+                product: product,
               ),
 
               const SizedBox(
@@ -133,20 +61,9 @@ class ProductCard extends StatelessWidget {
 
               Text(
                 product.name,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.body,
-              ),
-
-              const SizedBox(
-                height: AppSpacing.xs,
-              ),
-
-              Text(
-                "₹${product.price.toStringAsFixed(0)}",
-                style: AppTextStyles.title.copyWith(
-                  color: AppColors.primary,
-                ),
               ),
 
               const SizedBox(
@@ -156,37 +73,41 @@ class ProductCard extends StatelessWidget {
               Row(
                 children: [
 
-                  const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 18,
-                  ),
-
-                  const SizedBox(width: 4),
-
                   Text(
-                    product.rating.toString(),
-                    style: AppTextStyles.bodySecondary,
+                    "₹${product.price.toStringAsFixed(0)}",
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
 
+                  const SizedBox(width: AppSpacing.xs),
+
+                  if (product.discount > 0)
+                    Expanded(
+                      child: Text(
+                        "₹${originalPrice.toStringAsFixed(0)}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.bodySecondary.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    ),
                 ],
               ),
 
-              // const SizedBox(
-              //   height: AppSpacing.md,
-              // ),
+              const SizedBox(
+                height: AppSpacing.xs,
+              ),
 
-              // SizedBox(
-              //   width: double.infinity,
-              //   height: 35,
-              //   child: ElevatedButton(
-              //     onPressed: () {},
-              //
-              //     child: const Text(
-              //       "Add to Cart",
-              //     ),
-              //   ),
-              // ),
+              RatingChip(
+                rating: product.rating,
+              ),
+
+
+
+
 
             ],
           ),

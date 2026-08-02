@@ -26,27 +26,33 @@ class FeaturedProductsSection extends StatelessWidget {
           height: AppSpacing.md,
         ),
 
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final crossAxisCount =
+            constraints.maxWidth > 600 ? 3 : 2;
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
 
-          itemCount: products.length,
+              itemCount: products.length,
 
-          gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: AppSpacing.md,
-            mainAxisSpacing: AppSpacing.md,
-            childAspectRatio: 0.60,
-          ),
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: AppSpacing.md,
+                mainAxisSpacing: AppSpacing.md,
+                childAspectRatio: 0.60,
+              ),
 
-          itemBuilder: (context, index) {
+              itemBuilder: (context, index) {
 
-            return ProductCard(
-              product: products[index],
+                return ProductCard(
+                  product: products[index],
+                );
+
+              },
             );
-
-          },
+          }
         ),
       ],
     );

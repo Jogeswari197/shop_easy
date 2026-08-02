@@ -9,5 +9,6 @@ class AppRadius {
   static const lg = 16.0;
 
   static const xl = 24.0;
+  static const full = 999.0;
 
 }
